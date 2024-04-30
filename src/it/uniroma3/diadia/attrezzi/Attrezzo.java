@@ -7,7 +7,7 @@ import it.uniroma3.diadia.ambienti.Stanza;
  * del labirinto.
  * Ogni attrezzo ha un nome ed un peso.
  *
- * @author  docente di POO
+ * @author  docente di POO && 589480 && 589707
  * @see Stanza
  * @version base
  */

@@ -43,6 +43,9 @@ public class Stanza {
 	public void setDirezioni(String[] direzioni) {
 		this.direzioni = direzioni;
 	}
+	public int getNumeroAttrezziPossibili() {
+		return NUMERO_MASSIMO_ATTREZZI-this.numeroAttrezzi;
+	}
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
      * @param nome il nome della stanza
