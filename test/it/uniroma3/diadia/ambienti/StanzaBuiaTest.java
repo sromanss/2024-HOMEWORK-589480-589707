@@ -30,7 +30,7 @@ public class StanzaBuiaTest {
 	
 	@Test
 	public void testGetDescrizioneSenzaAttrezzo() {
-		String e = "qui c'è buio pesto";
+		String e = "qui c'è un buio pesto";
 		assertEquals(e, stanza.getDescrizione());
 	}
 }

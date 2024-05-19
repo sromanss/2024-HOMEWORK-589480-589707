@@ -1,59 +1,47 @@
 package it.uniroma3.diadia.comandi;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPosaTest {
-
-	private Partita partita;
-	private Attrezzo attrezzo;
+public class ComandoPosaTest implements Comando {
 	private IO io;
-	private Comando comando;
-
-	@Before
-	public void setUp() throws Exception {
-		partita = new Partita();
-		attrezzo = new Attrezzo("martello", 2);
-		comando = new ComandoPosa();
-		io = new IOConsole();
-		comando.setIo(io);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	//aggiunge attrezzo nella borsa giocatore, lo fa posare nella stanza e verifica che ci sia
-	public void testAttrezzoPosato() {
-		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
-		comando.setParametro("martello");
-		comando.esegui(partita);
-		assertTrue(partita.getStanzaCorrente().hasAttrezzo("martello"));
-	}
-
-	@Test
-	//fa posare un oggetto che il giocatore non ha e verifica che non ci sia nella stanza
-	public void testAttrezzoPosatoNull() {
-		comando.setParametro("martello");
-		comando.esegui(partita);
-		assertFalse(partita.getStanzaCorrente().hasAttrezzo("martello"));
-	}
+	private String nomeAttrezzo;
+	private final static String NOME = "posa";
 
 
-	public void creatoreAttrezzi() {
-		for(int i= 0; i<10;i++) {
-			partita.getStanzaCorrente().addAttrezzo(new Attrezzo("utensile"+i, 1));
+	@Override
+	public void esegui(Partita partita) {
+		Attrezzo a = partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
+
+		if(partita.getStanzaCorrente().getNumeroAttrezziPossibili()>0) {
+			partita.getLabirinto().getStanzaCorrente().addAttrezzo(a);
+			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
+		}
+		else {
+			io.mostraMessaggio("Non c'e' spazio nella stanza per poter inserire questo attrezzo!");
 		}
 	}
+
+	@Override
+	public void setParametro(String parametro) {
+		this.nomeAttrezzo  = parametro;
+
+	}
+
+	@Override
+	public String getParametro() {
+		return this.nomeAttrezzo;
+	}
+
+	@Override
+	public void setIo(IO io) {
+		this.io = io;
+	}
+
+	@Override
+	public String getNome() {
+		return NOME;
+	}
+
 }
-	

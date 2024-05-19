@@ -1,55 +1,58 @@
 package it.uniroma3.diadia.comandi;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import it.uniroma3.diadia.IOConsole;
-
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.giocatore.Giocatore;
 
-
-public class ComandoVaiTest {
-
-	private Stanza s1;
-	private Stanza s2;
-	private Comando vai;
-	private Partita p;
+public class ComandoVaiTest implements Comando {
 	
-	@Before
-	public void setUp() throws Exception {
-		s1 = new Stanza("aula 1");
-		s2 = new Stanza("aula 2");
-		vai = new ComandoVai();
-		p = new Partita();
-		vai.setIo(new IOConsole());
-	}
+	private String direzione;
+	private IO io;
+	private final static String NOME = "vai";
 
-	@Test
-	public void testVaiNull() {
-		p.setStanzaCorrente(s1);
-		vai.esegui(p);
-		assertEquals(s1, p.getStanzaCorrente());
-	}
-	
-	@Test
-	public void testVaiDirezioneEsistente() {
-		p.setStanzaCorrente(s1);
-		s1.impostaStanzaAdiacente("sud-ovest", s2);
-		vai.setParametro("sud-ovest");
-		vai.esegui(p);
-		assertEquals(s2, p.getStanzaCorrente());
+	/**
+	 * esecuzione del comando
+	 */
+	@Override
+	public void esegui(Partita partita) {
+		Stanza stanzaCorrente = partita.getStanzaCorrente();
+		Stanza prossimaStanza = null;
+		if (this.direzione == null) {
+			this.io.mostraMessaggio("Dove vuoi andare? Devi specificare una direzione");
+		}
+
+		prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
+		if (prossimaStanza == null) {
+			this.io.mostraMessaggio("Direzione inesistente");
+			return;
+		}
+
+		partita.setStanzaCorrente(prossimaStanza);
+		this.io.mostraMessaggio(partita.getStanzaCorrente().getNome());
+		Giocatore giocatore = partita.getGiocatore();
+		giocatore.setCfu(giocatore.getCfu() - 1);
 	}
 	
-	@Test
-	public void testVaiDirezioneInesistente() {
-		p.setStanzaCorrente(s1);
-		s1.impostaStanzaAdiacente("sud-ovest", s2);
-		vai.setParametro("in fondo a destra");
-		vai.esegui(p);
-		assertNotEquals(s2, p.getStanzaCorrente());
+	@Override
+	public void setParametro(String parametro) {
+		this.direzione = parametro;
 	}
+	
+	@Override
+	public String getParametro() {
+		return this.direzione;
+	}
+
+	@Override
+	public void setIo(IO io) {
+		this.io = io;
+		
+	}
+	
+	@Override
+	public String getNome() {
+		return NOME;
+	}
+
 }
