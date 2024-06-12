@@ -14,6 +14,7 @@ public class ComandoGuarda implements Comando {
 		io.mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
 		io.mostraMessaggio("CFU rimanenti: "+partita.getGiocatore().getCfu()+ "CFU");
 		io.mostraMessaggio(partita.getGiocatore().getBorsa().toString());
+		io.mostraMessaggio("Personaggio presente:" + partita.getStanzaCorrente().getPersonaggio());
 		
 	}
 

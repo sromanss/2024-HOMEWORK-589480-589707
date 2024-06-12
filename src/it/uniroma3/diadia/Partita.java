@@ -67,4 +67,8 @@ public class Partita {
 		this.finita = true;
 	}
 	
+	public boolean giocatoreIsVivo() {
+		return this.giocatore.getCfu()>0;
+	}
+	
 }

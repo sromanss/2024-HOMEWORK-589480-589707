@@ -9,7 +9,10 @@ public class ComandoAiuto implements Comando {
 			"\nposa <nome_attrezzo> -> per posare l'attrezzo specificato nella stanza corrente",
 			"\nguarda -> per conoscere la propria posizione, i cfu rimanenti e gli attrezzi nella borsa",
 			"\naiuto -> per conoscere la lista dei comandi possibili",
-			"\nfine -> per terminare il programma"};
+			"\nfine -> per terminare il programma",
+			"\nsaluta -> per salutare il personaggio misterioso presente nella stanza",
+			"\ninteragisci -> per interagire con il personaggio misterioso presente nella stanza",
+			"\nregala -> per fare un regalo al personaggio misterioso presente nella stanza"};
 
 	private IO io;
 	private final static String NOME = "aiuto";
@@ -19,7 +22,7 @@ public class ComandoAiuto implements Comando {
 		for(int i=0; i< ELENCO_COMANDI.length; i++) 
 			io.mostraMessaggio(ELENCO_COMANDI[i]+" ");
 		io.mostraMessaggio("");
-	}
+	} 
 
 	@Override
 	public void setParametro(String parametro) {

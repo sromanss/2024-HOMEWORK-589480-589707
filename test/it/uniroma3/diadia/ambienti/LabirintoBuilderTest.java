@@ -8,16 +8,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class LabirintoBuilderTest {
 
-	LabirintoBuilder lb;
+	Labirinto.LabirintoBuilder lb;
 
 	@Before
 	public void setUp() throws Exception {
-		lb = new LabirintoBuilder();
-	}
+		//lb = Labirinto.newBuilder("labirinto.txt");
+		lb = new LabirintoBuilder("labirinto.txt");
+	} 
 
 	@After
 	public void tearDown() throws Exception {
